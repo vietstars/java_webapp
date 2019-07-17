@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping; //restful
 import org.springframework.web.bind.annotation.RequestMethod; //restful
 import org.springframework.web.bind.annotation.RequestParam; //request param
 import org.springframework.web.bind.annotation.PathVariable; //url variable
+import org.springframework.util.StringUtils;
 
 @Controller
 public class GreetingController {
@@ -17,9 +18,10 @@ public class GreetingController {
     //     return "greeting";
     // }
 
-    @RequestMapping(value = {"/greeting","/greeting/{name}"}, method = RequestMethod.GET)
-    public String greeting(@PathVariable(required=false) String name, Model model) {
-        model.addAttribute("name", name);
+    @RequestMapping(value = {"/greeting/{name}","/greeting"}, method = RequestMethod.GET)
+    public String greeting(@PathVariable(required = false) String name, Model model) {
+    	String username = StringUtils.hasLength(name) ? name : "World";
+        model.addAttribute("name", username);
         return "greeting";
     }
 
